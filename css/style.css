@@ -161,13 +161,7 @@ section {
 	}
 }
 .header.scroll .container .bars{
-	display: none;
-	padding: 5px 7px;
 	color: #000;
-	border: 2px solid;
-	border-radius: 5px;
-	font-size: 25px;
-	cursor: pointer;
 }
 .header .container .bars{
 	display: none;
