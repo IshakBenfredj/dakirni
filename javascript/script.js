@@ -5,10 +5,11 @@ open.onclick = function(){
 	this.classList.toggle("active");
 	navbar.classList.toggle("active");
 }
-
 // Change Background Color Of Header
 let header = document.querySelector(".header");
 window.onscroll = function() {
+	open.classList.remove("active");
+	navbar.classList.remove("active");
 	window.scrollY >= 100 ? header.classList.add("scroll") : header.classList.remove("scroll");
 };
 // Change Background Of Landing Every 3s
