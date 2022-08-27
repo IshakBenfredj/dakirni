@@ -1,3 +1,4 @@
+
 // Show Nav Menu 
 let open = document.querySelector(".bars");
 let navbar = document.querySelector(".nav");
@@ -61,9 +62,8 @@ fetch('https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/
 		wilayas.innerHTML = "";
 	}
 	data.forEach((ele)=>{
-		countries.innerHTML += `
-		<option>${ele.name}</option>
-		`;
+		
+		if(ele.name !== 'Israel')countries.innerHTML += `<option>${ele.name}</option>`
 	});
 	countries.onblur=function(){
 		data.forEach((ele)=>{
@@ -71,6 +71,7 @@ fetch('https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/
 				// wilayas.innerHTML = "";
 				let states = ele.states;
 				states.forEach((state)=>{
+		
 					wilayas.innerHTML += `
 						<option>${state.name}</option>
 					`;
@@ -116,6 +117,7 @@ showSurat();
 async function showSurat(){
 	const response = await fetch('https://api.alquran.cloud/v1/meta');
 	const data = await response.json();
+	// console.log(data);
 	printData(data);
 }
 function printData(data){
@@ -147,14 +149,29 @@ function printData(data){
 				showAyat();
 				async function showAyat(){
 					popupQuran.classList.add("active");
-					const response = await fetch(`https://api.alquran.cloud/v1/surah/${index +1}`);
-					const data = await response.json();
-					let ayat = data.data.ayahs;
-					let titleOfSurah = data.data.name;
-					ayat.forEach((ele)=>{
-						surahTitle.innerHTML = `${titleOfSurah}`;
+					// arrbic version
+					const responseArr = await fetch(`https://api.alquran.cloud/v1/surah/${index +1}`);
+					const dataArr = await responseArr.json();
+					//english version 
+					const responseEng = await fetch(`https://api.alquran.cloud/v1/surah/${index +1}/en.asad`);
+					const dataEng = await responseEng.json();
+				
+					const ayatArr = dataArr.data.ayahs;
+					const ayatEng = dataEng.data.ayahs;
+					const titleOfSurahArr = dataArr.data.name;
+					const titleOfSurahArrEng = dataEng.data.englishName;
+					ayatArr.forEach((ele,i)=>{
+						surahTitle.innerHTML = `${titleOfSurahArr} - ${titleOfSurahArrEng}`;
 						ayatContainer.innerHTML += `
-							<p><span class="numaya">${ele.numberInSurah}</span>${ele.text}</p>
+						<p ><span class="numaya" >${ele.numberInSurah}</span>${ele.text}</p>
+
+						<p class="english-verse"> 
+						
+						<span class="numaya numayaToleft" >${ayatEng[i].numberInSurah}</span>
+						${ayatEng[i].text}
+						
+						</p>
+						
 						`;
 					})
 				}
@@ -193,6 +210,11 @@ fetch('json/adkartypes.json').then( response => response.json()).then((data) => 
 				<h3>${data[i].category}</h3>
 			</div>
 		`;
+
+
+
+
+
 	}
 	adkarContainer.innerHTML += `
 			<div class="dikr-type diff-adkar">
@@ -238,7 +260,6 @@ fetch('json/adkartypes.json').then( response => response.json()).then((data) => 
 				.then( data =>{
 					popupAdkarContainer.innerHTML = "";
 					let adkars = data[index].adkar;
-					console.log(adkars);
 					adkars.forEach(ele=>{
 						popupAdkar.classList.add("active");
 						popupTitle.innerHTML = data[index].category;
@@ -261,7 +282,6 @@ fetch('json/adkartypes.json').then( response => response.json()).then((data) => 
 							</div>
 						`;
 					})
-					// console.log(adkar);
 				});
 			});
 		}
@@ -270,7 +290,7 @@ fetch('json/adkartypes.json').then( response => response.json()).then((data) => 
 		})
 	});
 });
-
+const random=(min,max)=>Math.random()*(max-min+1)+min
 // Show Ahadiths
 let transfer = document.querySelector(".hadith .container .transfere p");
 let indexOfTransfer = document.querySelector(".hadith .container .transfere input");
@@ -286,8 +306,10 @@ if (localStorage.getItem("indexHadith")){
 fetch("https://ahadith-api.herokuapp.com/api/search/ahadith/%D8%A7%D9%84%D9%84%D9%87/ar-notashkeel")
 .then(response => response.json())
 .then( data => {
-	let hadiths = data.Chapter;
+	const hadiths = data.Chapter;
 	lengthOfAhadiths.innerHTML = data.Chapter.length;
+	const randomHadith=hadiths[Math.floor(random(1,hadiths.length))].Ar_Text_Without_Tashkeel;
+	document.querySelector('.random-hadith').innerHTML+=randomHadith;
 	transfer.onclick = function(){
 		if (indexOfTransfer.value >= 1 && indexOfTransfer.value <= hadiths.length){
 			hadithIndex = indexOfTransfer.value -1;
@@ -342,4 +364,3 @@ titlesOfStories.forEach((title)=>{
 	}
 })
 
-// End Stories
