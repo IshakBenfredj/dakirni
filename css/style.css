@@ -24,12 +24,23 @@ ul,li {
     padding-right: 15px;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
 }
 /* Small */
 @media (min-width: 768px) {
     .container {
         width: 750px;
     }
+/* .landing .container{
+   flex-direction: column;
+} */
+
+.landing .text{
+display: none;
+}
+.landing .container {
+    justify-content: center
+}
 }
 /* Meduim */
 @media (min-width: 992px) {
@@ -80,6 +91,12 @@ section {
     cursor: pointer;
     color: #fff;
     background-color: var(--main-color);
+    height: 40px;
+    width: 40px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
 }
 .btn {
     transition: .3s;
@@ -236,18 +253,30 @@ section {
 }
 .landing .container{
 	height: 100%;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    gap: 5rem;
 }
 .landing .container .text{
-	position: absolute;
-	z-index: 0;
 	color: #fff;
-	top: 50%;
-	transform: translateY(-50%);
 	font-size: 20px;
 	max-width: 500px;
 	line-height: 2;
 	font-weight: 700;
 }
+.landing .container .random-hadith{
+	color: #fff;
+	font-size: 20px;
+	max-width: 500px;
+	line-height: 2;
+	font-weight: 700;
+}
+.random-hadith p{
+	color: #fff;
+
+}
+
 .landing .container .text .aya{
 	font-family: 'Aref Ruqaa', serif;
 	font-size: 25px;
@@ -622,13 +651,14 @@ section {
     border: 2px solid var(--main-color);
     outline: none;
 }
-.hadith .container .hadith-text{
+.hadith .container .hadith-text {
 	position: relative;
     width: 100%;
     border: 2px solid var(--main-color);
     padding: 20px;
 	background-color: #fff;
 }
+
 .hadith .container .hadith-text p{
 	line-height: 1.5;
     font-weight: 600;
@@ -735,6 +765,13 @@ section {
     margin-left: 8px;
     display: inline-block;
     padding: 0 4px;
+    height: 30px;
+    width: 30px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+
 }
 /* End Quran */
 
@@ -1003,3 +1040,14 @@ section {
     }
 }
 /* End Footer */
+.quran{
+    position: relative;
+}
+.numayaToleft{
+
+    position: absolute;
+    left: -20px;
+
+    /* display: flex;
+flex-direction: row-reverse */
+}
